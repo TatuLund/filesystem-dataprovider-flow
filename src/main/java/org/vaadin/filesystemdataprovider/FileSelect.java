@@ -67,7 +67,7 @@ public class FileSelect extends AbstractField<FileSelect,File> implements HasSiz
 	                .withProperty("leaf",
 	                        item -> !getDataCommunicator().hasChildren(item))
 	                .withProperty("title", title -> String.valueOf(titleProvider.apply(title)))
-	                .withProperty("icon", icon -> String.valueOf(iconProvider.apply(icon)).toLowerCase())
+	                .withProperty("icon", icon -> fixIconName(String.valueOf(iconProvider.apply(icon))))
 	                .withProperty("name",
 	                        value -> String.valueOf(valueProvider.apply(value))));
 	        final SerializableComparator<T> comparator = 
@@ -76,8 +76,15 @@ public class FileSelect extends AbstractField<FileSelect,File> implements HasSiz
 	        column.setComparator(comparator);
 
 	        return column;
-	    }		
-	}
+	    }
+	    
+	    private String fixIconName(String name) {
+	    	String trimmed;
+	    	trimmed = name.toLowerCase();
+	    	trimmed = trimmed.replace("_", "-");
+	    	return trimmed;
+	    }
+	}	
 	
 	/**
 	 * Constructor

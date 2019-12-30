@@ -274,15 +274,15 @@ public class FileTypeResolver implements Serializable {
     	if (mimeType.contains("java")) return VaadinIcon.FILE_CODE;
     	if (mimeType.contains("c++")) return VaadinIcon.FILE_CODE;
     	if (mimeType.contains("excel")) return VaadinIcon.FILE_TABLE;
-    	if (mimeType.contains("word")) return VaadinIcon.FILE_TEXT_O;
+    	if (mimeType.contains("word")) return VaadinIcon.FILE_TEXT;
     	if (mimeType.contains("powerpoint")) return VaadinIcon.FILE_PRESENTATION;
     	if (mimeType.contains("zip")) return VaadinIcon.FILE_ZIP;
-    	if (mimeType.contains("pdf")) return VaadinIcon.FILE_TEXT_O;
+    	if (mimeType.contains("pdf")) return VaadinIcon.FILE_TEXT;
     	if (mimeType.startsWith("audio")) return VaadinIcon.FILE_SOUND;
     	if (mimeType.startsWith("image")) return VaadinIcon.FILE_PICTURE;
     	if (mimeType.startsWith("text")) return VaadinIcon.FILE_TEXT_O;
     	if (mimeType.startsWith("video")) return VaadinIcon.FILE_MOVIE;
-        if (mimeType.startsWith("inode/drive")) return VaadinIcon.HARDDRIVE;
+        if (mimeType.startsWith("inode/drive")) return VaadinIcon.HARDDRIVE_O;
         if (mimeType.startsWith("inode/directory")) return VaadinIcon.FOLDER;
         if (mimeType.startsWith("inode/symlink")) return VaadinIcon.FOLDER_O;
     	
