@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
 /**
@@ -26,7 +25,7 @@ public class FileTypeResolver implements Serializable {
     /**
      * Default icon given if no icon is specified for a mime-type.
      */
-    private static Icon DEFAULT_ICON = VaadinIcon.FILE_O.create();
+    private static VaadinIcon DEFAULT_ICON = VaadinIcon.FILE_O;
 
     /**
      * Default mime-type.
@@ -264,28 +263,28 @@ public class FileTypeResolver implements Serializable {
      *            the name of the file whose icon is requested.
      * @return the icon corresponding to the given file
      */
-    public static Icon getIcon(String fileName) {
+    public static VaadinIcon getIcon(String fileName) {
         return getIconByMimeType(getMIMEType(fileName));
     }
 
-    private static Icon getIconByMimeType(String mimeType) {
-    	if (mimeType.contains("font")) return VaadinIcon.FILE_FONT.create();
-    	if (mimeType.contains("html")) return VaadinIcon.FILE_CODE.create();
-    	if (mimeType.contains("css")) return VaadinIcon.FILE_CODE.create();
-    	if (mimeType.contains("java")) return VaadinIcon.FILE_CODE.create();
-    	if (mimeType.contains("c++")) return VaadinIcon.FILE_CODE.create();
-    	if (mimeType.contains("excel")) return VaadinIcon.FILE_TABLE.create();
-    	if (mimeType.contains("word")) return VaadinIcon.FILE_TEXT_O.create();
-    	if (mimeType.contains("powerpoint")) return VaadinIcon.FILE_PRESENTATION.create();
-    	if (mimeType.contains("zip")) return VaadinIcon.FILE_ZIP.create();
-    	if (mimeType.contains("pdf")) return VaadinIcon.FILE_TEXT_O.create();
-    	if (mimeType.startsWith("audio")) return VaadinIcon.FILE_SOUND.create();
-    	if (mimeType.startsWith("image")) return VaadinIcon.FILE_PICTURE.create();
-    	if (mimeType.startsWith("text")) return VaadinIcon.FILE_TEXT_O.create();
-    	if (mimeType.startsWith("video")) return VaadinIcon.FILE_MOVIE.create();
-        if (mimeType.startsWith("inode/drive")) return VaadinIcon.HARDDRIVE_O.create();
-        if (mimeType.startsWith("inode/directory")) return VaadinIcon.FOLDER.create();
-        if (mimeType.startsWith("inode/symlink")) return VaadinIcon.FOLDER_O.create();
+    private static VaadinIcon getIconByMimeType(String mimeType) {
+    	if (mimeType.contains("font")) return VaadinIcon.FILE_FONT;
+    	if (mimeType.contains("html")) return VaadinIcon.FILE_CODE;
+    	if (mimeType.contains("css")) return VaadinIcon.FILE_CODE;
+    	if (mimeType.contains("java")) return VaadinIcon.FILE_CODE;
+    	if (mimeType.contains("c++")) return VaadinIcon.FILE_CODE;
+    	if (mimeType.contains("excel")) return VaadinIcon.FILE_TABLE;
+    	if (mimeType.contains("word")) return VaadinIcon.FILE_TEXT_O;
+    	if (mimeType.contains("powerpoint")) return VaadinIcon.FILE_PRESENTATION;
+    	if (mimeType.contains("zip")) return VaadinIcon.FILE_ZIP;
+    	if (mimeType.contains("pdf")) return VaadinIcon.FILE_TEXT_O;
+    	if (mimeType.startsWith("audio")) return VaadinIcon.FILE_SOUND;
+    	if (mimeType.startsWith("image")) return VaadinIcon.FILE_PICTURE;
+    	if (mimeType.startsWith("text")) return VaadinIcon.FILE_TEXT_O;
+    	if (mimeType.startsWith("video")) return VaadinIcon.FILE_MOVIE;
+        if (mimeType.startsWith("inode/drive")) return VaadinIcon.HARDDRIVE;
+        if (mimeType.startsWith("inode/directory")) return VaadinIcon.FOLDER;
+        if (mimeType.startsWith("inode/symlink")) return VaadinIcon.FOLDER_O;
     	
         // If nothing is known about the file-type, general file
         // icon is used
@@ -302,13 +301,14 @@ public class FileTypeResolver implements Serializable {
      *            the file whose icon is requested.
      * @return the VaadinIcons font icon corresponding to the given file
      */
-    public static Icon getIcon(File file) {
+    public static VaadinIcon getIcon(File file) {
         return getIconByMimeType(getMIMEType(file));
     }
 
     /**
      * Gets the mime-type for a file. Currently the returned file type is
      * resolved by the filename extension only.
+
      *
      * @param file
      *            the file whose mime-type is requested.
