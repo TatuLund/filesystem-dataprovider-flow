@@ -24,3 +24,11 @@ mvn install -Pdirectory
 The package is created as `target/filesystemdataprovider-1.0.0.zip`
 
 For more information or to upload the package, visit https://vaadin.com/directory/my-components?uploadNewComponent
+
+## History
+
+### Version 2.1.0
+- Add FTP variants
+
+### Version 2.0.0
+- First release for Vaadin 10+

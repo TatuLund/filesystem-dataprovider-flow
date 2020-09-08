@@ -40,32 +40,7 @@ public class FtpView extends VerticalLayout {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-//	    String ftpUrl = String.format(
-//	    	      "ftp://user:password@localhost:%d/foobar.txt", fakeFtpServer.getServerControlPort());
-//	    	 
-//        URLConnection urlConnection = null;
-//        try {
-//		    urlConnection = new URL(ftpUrl).openConnection();
-//        } catch (IOException e) {
-//	        e.printStackTrace();
-//        }
-//	    InputStream inputStream = null;
-//	    try {
-//            inputStream = urlConnection.getInputStream();
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
-//        try {
-//            Files.copy(inputStream, new File("downloaded_buz.txt").toPath());
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
-//        try {
-//            inputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-	    	 	    	 
+   	 
     	FtpSelect fileSelect = new FtpSelect(ftp);
     	fileSelect.addValueChangeListener(event -> {
         	FtpFile file = fileSelect.getValue();

@@ -17,7 +17,9 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
 
 /**
- * FileSelect is a simple single file/directory selector component
+ * FtpSelect is a simple single file/directory selector component
+ *
+ * @since 2.1.0
  * 
  * @author Tatu Lund
  * */
@@ -42,7 +44,9 @@ public class FtpSelect extends AbstractField<FtpSelect,FtpFile> implements HasSi
 	/**
 	 * Constructor
 	 * 
-	 * @param rootFile The root directory where to browse
+	 * @since 2.1.0
+	 * 
+	 * @param client The FTP client where to browse
 	 */
 	public FtpSelect(FTPClient client) {
 		this(client,null);
@@ -51,9 +55,9 @@ public class FtpSelect extends AbstractField<FtpSelect,FtpFile> implements HasSi
 	/**
 	 * Alternative constructor with filter
 	 * 
-	 * @since 1.1.0
+	 * @since 2.1.0
 	 * 
-	 * @param rootFile The root directory where to browse
+	 * @param client The FTP client
 	 * @param filter Set filter used for filename extension
 	 */
 	public FtpSelect(FTPClient client, String filter) {

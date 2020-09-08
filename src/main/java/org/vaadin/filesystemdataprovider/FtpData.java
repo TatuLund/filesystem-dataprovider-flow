@@ -1,11 +1,8 @@
 package org.vaadin.filesystemdataprovider;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +10,6 @@ import java.util.List;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilter;
-import org.vaadin.filesystemdataprovider.FilesystemData.FileExtensionFilter;
 
 import com.vaadin.flow.data.provider.hierarchy.TreeData;
 
@@ -144,7 +140,7 @@ public class FtpData extends TreeData<FtpFile> {
 	 * Helper method used internally for fetching files lazily from
 	 * FtpDataProvider
 	 * 
-	 * @param path The folder
+	 * @param item The file
 	 * @return List of files in the folder
      * @since 2.1.0
 	 */
