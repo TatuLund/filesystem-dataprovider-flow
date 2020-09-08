@@ -10,23 +10,25 @@ import com.vaadin.flow.function.SerializablePredicate;
 
 
 /**
- * FileSystemDataProvider is data provider that can map file system to hierarchical
+ * FtpDataProvider is data provider that can map file system to hierarchical
  * data, so that it can be used e.g. with Tree and TreeGrid
  * 
  * @author Tatu Lund
+ * @since 2.1.0
  *
  */
-public class FilesystemDataProvider extends TreeDataProvider<File> {
+public class FtpDataProvider extends TreeDataProvider<FtpFile> {
 
     private boolean recursive;
-    FilesystemData treeData;
+    FtpData treeData;
     
     /**
-     * Construct new FilesystemDataProvider with given FilesystemData 
+     * Construct new FtpDataProvider with given FilesystemData 
      * 
      * @param treeData The data model
+     * @since 2.1.0
      */
-    public FilesystemDataProvider(FilesystemData treeData) {
+    public FtpDataProvider(FtpData treeData) {
     	super(treeData);
     	recursive = treeData.isRecursive();
     	this.treeData = treeData;
@@ -38,11 +40,12 @@ public class FilesystemDataProvider extends TreeDataProvider<File> {
      * @param query A query
      * 
      * @return The count of children
+     * @since 2.1.0
      */
     @Override
     public int getChildCount(
-            HierarchicalQuery<File, SerializablePredicate<File>> query) {    	
-    	final File parent = query.getParentOptional().orElse(treeData.getRootItems().get(0));
+            HierarchicalQuery<FtpFile, SerializablePredicate<FtpFile>> query) {    	
+    	final FtpFile parent = query.getParentOptional().orElse(treeData.getRootItems().get(0));
     	if (parent.isFile()) return 0;
     	else return (int) fetchChildren(query).count();
     }    
@@ -53,9 +56,10 @@ public class FilesystemDataProvider extends TreeDataProvider<File> {
      * @param item The File 
      * 
      * @return True if the File has children (i.e. it is a non empty directory)
+     * @since 2.1.0
      */
     @Override
-    public boolean hasChildren(File item) {
+    public boolean hasChildren(FtpFile item) {
     	if (!isInMemory()) {
     		return item.isDirectory() && !treeData.getChildrenFromFilesystem(item).isEmpty();
     	} else {
@@ -68,14 +72,15 @@ public class FilesystemDataProvider extends TreeDataProvider<File> {
      *  
      * @param query A query
      * @return A stream of Files
+     * @since 2.1.0
      */
     @Override
-    public Stream<File> fetchChildren(
-            HierarchicalQuery<File, SerializablePredicate<File>> query) {
+    public Stream<FtpFile> fetchChildren(
+            HierarchicalQuery<FtpFile, SerializablePredicate<FtpFile>> query) {
     	if (!isInMemory()) {    		
-        	File parent = query.getParentOptional().orElse(treeData.getRootItems().get(0));
+        	FtpFile parent = query.getParentOptional().orElse(treeData.getRootItems().get(0));
 			if (treeData.getChildren(parent).isEmpty()) {
-	        	List<File> files = treeData.getChildrenFromFilesystem(parent);
+	        	List<FtpFile> files = treeData.getChildrenFromFilesystem(parent);
 				treeData.addItems(parent, files);
 				return files.stream();
 			} else {
@@ -87,10 +92,11 @@ public class FilesystemDataProvider extends TreeDataProvider<File> {
     }
     
     /**
-     * FilesystemDataProvider is fully in-memory if it is constructed
+     * FtpDataProvider is fully in-memory if it is constructed
      * recursively, otherwise it is progressively lazy
      * 
      * @return boolean value
+     * @since 2.1.0
      */
 	@Override
 	public boolean isInMemory() {

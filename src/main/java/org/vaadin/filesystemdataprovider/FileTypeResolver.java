@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.net.ftp.FTPFile;
+
 import com.vaadin.flow.component.icon.VaadinIcon;
 
 /**
@@ -306,6 +308,21 @@ public class FileTypeResolver implements Serializable {
     }
 
     /**
+     * Gets the descriptive icon representing a file. First the mime-type for
+     * the given file name is resolved, and then the corresponding icon is
+     * fetched from the internal icon storage. If it is not found the default
+     * icon is returned.
+     *
+     * @param file
+     *            the file whose icon is requested.
+     * @return the VaadinIcons font icon corresponding to the given file
+     * @since 2.1.0
+     */
+    public static VaadinIcon getIcon(FTPFile file) {
+        return getIconByMimeType(getMIMEType(file));
+    }
+
+    /**
      * Gets the mime-type for a file. Currently the returned file type is
      * resolved by the filename extension only.
 
@@ -336,6 +353,45 @@ public class FileTypeResolver implements Serializable {
         return getMIMEType(file.getName());
     }
 
+    /**
+     * Gets the mime-type for a file. Currently the returned file type is
+     * resolved by the filename extension only.
+     *
+     * @param file
+     *            the file whose mime-type is requested.
+     * @return the files mime-type <code>String</code>
+     * @since 2.1.0
+     */
+    public static String getMIMEType(FTPFile file) {
+
+        // Checks for nulls
+        if (file == null) {
+            throw new NullPointerException("File can not be null");
+        }
+
+        // Directories
+        if (file.isDirectory()) {
+            // Drives
+            if (file instanceof FtpFile) {
+            	FtpFile ftpFile = (FtpFile) file;
+            	if (ftpFile.isRoot()) {
+            		return "inode/drive";
+            	} else if (file.isSymbolicLink()) {
+            		return "inode/symlink";
+            	} else {
+            		return "inode/directory";
+            	}
+            } else if (file.isSymbolicLink()) {
+            	return "inode/symlink";
+            } else {
+                return "inode/directory";
+            }
+        }
+
+        // Return type from extension
+        return getMIMEType(file.getName());
+    }
+    
     /**
      * Adds a mime-type mapping for the given filename extension. If the
      * extension is already in the internal mapping it is overwritten.

@@ -3,6 +3,8 @@ package org.vaadin.filesystemdataprovider;
 import java.io.File;
 import java.util.Date;
 
+import org.apache.commons.net.ftp.FTPClient;
+
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
@@ -20,29 +22,30 @@ import com.vaadin.flow.data.selection.SingleSelect;
  * @author Tatu Lund
  * */
 @Tag("div")
-public class FileSelect extends AbstractField<FileSelect,File> implements HasSize, HasValidation, HasComponents, SingleSelect<FileSelect, File>, FileSelectStyles {
+public class FtpSelect extends AbstractField<FtpSelect,FtpFile> implements HasSize, HasValidation, HasComponents, SingleSelect<FtpSelect, FtpFile>, FileSelectStyles {
 	private String filesText = "files";
 	
-    private Tree<File> tree = new Tree<>();
+    private Tree<FtpFile> tree = new Tree<>();
     private Component content;
     
-    private File rootFile;
-	private File selectedFile = null;
+	private FtpFile selectedFile = null;
 	private String filter = null;
-	private FilesystemData root = null;
+	private FtpData root = null;
 
 	private String errorMessage = defaultErrorMessage;
 	private Div errorLabel = new Div();
 	private Label label = new Label();
 	private Label required = new Label("*");
+
+	private FTPClient client;
 	
 	/**
 	 * Constructor
 	 * 
 	 * @param rootFile The root directory where to browse
 	 */
-	public FileSelect(File rootFile) {
-		this(rootFile,null);
+	public FtpSelect(FTPClient client) {
+		this(client,null);
 	}
 
 	/**
@@ -53,9 +56,9 @@ public class FileSelect extends AbstractField<FileSelect,File> implements HasSiz
 	 * @param rootFile The root directory where to browse
 	 * @param filter Set filter used for filename extension
 	 */
-	public FileSelect(File rootFile, String filter) {
+	public FtpSelect(FTPClient client, String filter) {
 		super(null);
-		this.rootFile = rootFile;
+		this.client = client;
 		if (filter != null) this.filter = filter;
 		getElement().getStyle().set("display", "flex");
 		getElement().getStyle().set("flex-direction", "column");
@@ -72,17 +75,17 @@ public class FileSelect extends AbstractField<FileSelect,File> implements HasSiz
 		content = setupTree();
 		add(indicators,content,errorLabel);
 	}
-	
+
 	private Component setupTree() {
 		if (filter != null) {
-			root = new FilesystemData(rootFile, filter, false);
+			root = new FtpData(client, filter, false);
 		} else {
-			root = new FilesystemData(rootFile, false);
+			root = new FtpData(client, false);
 		}
-    	FilesystemDataProvider fileSystem = new FilesystemDataProvider(root);
+    	FtpDataProvider fileSystem = new FtpDataProvider(root);
         tree.setDataProvider(fileSystem);
 
-        tree.addHierarchyColumn(File::getName,file -> FileTypeResolver.getIcon(file),file -> getFileDescription(file));
+        tree.addHierarchyColumn(FtpFile::getName,file -> FileTypeResolver.getIcon(file),file -> getFileDescription(file));
         setupTreeStyles(tree);		
         tree.addSelectionListener(event -> {
         	selectedFile = null;
@@ -90,17 +93,17 @@ public class FileSelect extends AbstractField<FileSelect,File> implements HasSiz
         		selectedFile = file;
         		this.setValue(selectedFile);
         	});
-        });
+        });	
         setSizeFull();
         
         return tree;
 	}
 
-	private String getFileDescription(File file) {
+	private String getFileDescription(FtpFile file) {
 		String desc = "";
-		if (!file.isDirectory()) {
-			Date date = new Date(file.lastModified());
-			long size = file.length();
+		if (!file.isDirectory()) {			
+			Date date = Date.from(file.getTimestamp().toInstant());
+			long size = file.getSize();
 			String unit = "";
 			if (size > GIGA) {
 				size = size / GIGA;
@@ -135,7 +138,7 @@ public class FileSelect extends AbstractField<FileSelect,File> implements HasSiz
 	}
 	
 	@Override
-	protected void setPresentationValue(File value) {
+	protected void setPresentationValue(FtpFile value) {
 		tree.select(value);
 	}
 
