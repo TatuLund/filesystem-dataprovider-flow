@@ -2,6 +2,7 @@ package org.vaadin.filesystemdataprovider;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Set;
 
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.Component;
@@ -13,23 +14,27 @@ import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.data.selection.MultiSelect;
+import com.vaadin.flow.data.selection.MultiSelectionEvent;
+import com.vaadin.flow.data.selection.MultiSelectionListener;
 import com.vaadin.flow.data.selection.SingleSelect;
+import com.vaadin.flow.shared.Registration;
 
 /**
- * FileSelect is a simple single file/directory selector component
+ * MultiFileSelect is a simple multi file/directory selector component
  * 
  * @author Tatu Lund
  */
 @Tag("div")
-public class FileSelect extends AbstractField<FileSelect, File>
-		implements HasSize, HasValidation, HasComponents, SingleSelect<FileSelect, File>, FileSelectStyles {
+public class MultiFileSelect extends AbstractField<MultiFileSelect, Set<File>>
+		implements HasSize, HasValidation, HasComponents, MultiSelect<MultiFileSelect, File>, FileSelectStyles {
 	private String filesText = "files";
 
 	private Tree<File> tree = new Tree<>();
 	private Component content;
 
 	private File rootFile;
-	private File selectedFile = null;
+	private Set<File> selectedFiles = null;
 	private String filter = null;
 	private FilesystemData root = null;
 
@@ -44,7 +49,7 @@ public class FileSelect extends AbstractField<FileSelect, File>
 	 * @param rootFile
 	 *            The root directory where to browse
 	 */
-	public FileSelect(File rootFile) {
+	public MultiFileSelect(File rootFile) {
 		this(rootFile, null);
 	}
 
@@ -58,7 +63,7 @@ public class FileSelect extends AbstractField<FileSelect, File>
 	 * @param filter
 	 *            Set filter used for filename extension
 	 */
-	public FileSelect(File rootFile, String filter) {
+	public MultiFileSelect(File rootFile, String filter) {
 		super(null);
 		this.rootFile = rootFile;
 		if (filter != null)
@@ -87,16 +92,12 @@ public class FileSelect extends AbstractField<FileSelect, File>
 		}
 		FilesystemDataProvider fileSystem = new FilesystemDataProvider(root);
 		tree.setDataProvider(fileSystem);
-
 		tree.addHierarchyColumn(File::getName, file -> FileTypeResolver.getIcon(file),
 				file -> getFileDescription(file));
-		setupTreeStyles(tree, SelectionMode.SINGLE);
+		setupTreeStyles(tree, SelectionMode.MULTI);
 		tree.addSelectionListener(event -> {
-			selectedFile = null;
-			event.getFirstSelectedItem().ifPresent(file -> {
-				selectedFile = file;
-				this.setValue(selectedFile);
-			});
+			selectedFiles = event.getAllSelectedItems();
+			this.setValue(event.getAllSelectedItems());
 		});
 		setSizeFull();
 
@@ -141,8 +142,8 @@ public class FileSelect extends AbstractField<FileSelect, File>
 	}
 
 	@Override
-	protected void setPresentationValue(File value) {
-		tree.select(value);
+	protected void setPresentationValue(Set<File> value) {
+		tree.asMultiSelect().setValue(value);
 	}
 
 	@Override
@@ -187,5 +188,26 @@ public class FileSelect extends AbstractField<FileSelect, File>
 		} else {
 			this.label.setVisible(false);
 		}
+	}
+
+	@Override
+	public Set<File> getValue() {
+		return tree.asMultiSelect().getValue();
+	}
+
+	@Override
+	public Set<File> getSelectedItems() {
+		return tree.asMultiSelect().getSelectedItems();
+	}
+
+	@Override
+	public void updateSelection(Set<File> arg0, Set<File> arg1) {
+		tree.asMultiSelect().updateSelection(arg0, arg1);
+	}
+
+	@Override
+	public Registration addSelectionListener(MultiSelectionListener<MultiFileSelect, File> listener) {
+		return addValueChangeListener(event -> listener
+				.selectionChange(new MultiSelectionEvent<>(this, this, event.getOldValue(), event.isFromClient())));
 	}
 }

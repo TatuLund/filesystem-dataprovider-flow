@@ -6,11 +6,13 @@ import java.util.Date;
 import org.apache.commons.net.ftp.FTPClient;
 
 import com.vaadin.flow.component.AbstractField;
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -90,7 +92,7 @@ public class FtpSelect extends AbstractField<FtpSelect,FtpFile> implements HasSi
         tree.setDataProvider(fileSystem);
 
         tree.addHierarchyColumn(FtpFile::getName,file -> FileTypeResolver.getIcon(file),file -> getFileDescription(file));
-        setupTreeStyles(tree);		
+        setupTreeStyles(tree, SelectionMode.SINGLE);		
         tree.addSelectionListener(event -> {
         	selectedFile = null;
         	event.getFirstSelectedItem().ifPresent(file -> {
@@ -99,10 +101,10 @@ public class FtpSelect extends AbstractField<FtpSelect,FtpFile> implements HasSi
         	});
         });	
         setSizeFull();
-        
+
         return tree;
 	}
-
+    
 	private String getFileDescription(FtpFile file) {
 		String desc = "";
 		if (!file.isDirectory()) {			

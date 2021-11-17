@@ -62,8 +62,8 @@ interface FileSelectStyles {
 		return defaultErrorMessage;
 	}
 
-	default void setupTreeStyles(Tree tree) {
-		tree.setSelectionMode(SelectionMode.SINGLE);
+	default void setupTreeStyles(Tree tree, SelectionMode mode) {
+		tree.setSelectionMode(mode);
         tree.addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS);
         tree.setWidth("100%");
         tree.setHeight("100%");
