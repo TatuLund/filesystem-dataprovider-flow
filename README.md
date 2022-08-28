@@ -27,6 +27,12 @@ For more information or to upload the package, visit https://vaadin.com/director
 
 ## History
 
+#### Verion 3.1.0
+- Fixed icons to be compatible with Vaadin 21 and newer
+
+### Version 3.0.0
+- Build against Vaadin 18
+
 ### Version 2.1.0
 - Add FTP variants
 
