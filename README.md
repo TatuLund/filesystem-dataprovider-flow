@@ -1,11 +1,25 @@
 # FilesystemDataProvider
 
-FilesystemDataProvider is a data model add-on for Vaadin 10/14 (Flow) providing hierarchical
+FilesystemDataProvider is a data model add-on for Vaadin 23(Flow) providing hierarchical
 data of the filesystem, and it can be used to supply it to Tree and TreeGrid components.
 This is fully server side add-on.
 
 The inspiration of this add-on is to provide similar functionality than Vaadin 7's 
-built in FilesystemContainer had. Hence it is useful for Vaadin 7 -> Vaadin 10/14 migration projects.
+built in FilesystemContainer had. Hence it is useful for Vaadin 7 -> Vaadin 23 migration projects.
+
+# Components
+
+* FilesystemDataProvider: Data provider wrapper of the filesystem
+
+* FileSelect: Field UI component that allows selecting a single file, value is File
+
+* MultiFileSelect: Field UI component that allows selecting multiple files, value is Set<File>
+
+* FtpDataProvider: Data provider wrapper of the FTP client, uses appache commons ftp
+
+* FtpSelect: Field UI component that acts as FTP client, value is FtpFile
+  
+* FtpFile: Extended FTPFile, that implements Comparable, so that it works with Vaadin's DataProvider API's.
 
 ## Development instructions
 
