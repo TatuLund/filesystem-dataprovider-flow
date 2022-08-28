@@ -27,7 +27,7 @@ For more information or to upload the package, visit https://vaadin.com/director
 
 ## History
 
-#### Verion 3.1.0
+### Version 3.1.0
 - Fixed icons to be compatible with Vaadin 21 and newer
 
 ### Version 3.0.0
