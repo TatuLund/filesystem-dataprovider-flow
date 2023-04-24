@@ -41,6 +41,9 @@ For more information or to upload the package, visit https://vaadin.com/director
 
 ## History
 
+### Version 3.3.0
+- Compatibility with Vaadin 24 and newer
+
 ### Version 3.1.0
 - Fixed icons to be compatible with Vaadin 21 and newer
 
