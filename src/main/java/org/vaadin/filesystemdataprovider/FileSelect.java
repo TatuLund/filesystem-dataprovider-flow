@@ -11,7 +11,7 @@ import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
 
@@ -35,8 +35,8 @@ public class FileSelect extends AbstractField<FileSelect, File>
 
 	private String errorMessage = defaultErrorMessage;
 	private Div errorLabel = new Div();
-	private Label label = new Label();
-	private Label required = new Label("*");
+	private NativeLabel label = new NativeLabel();
+	private NativeLabel required = new NativeLabel("*");
 
 	/**
 	 * Constructor

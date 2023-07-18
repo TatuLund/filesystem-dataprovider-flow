@@ -12,7 +12,7 @@ import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.selection.MultiSelect;
 import com.vaadin.flow.data.selection.MultiSelectionEvent;
@@ -40,14 +40,13 @@ public class MultiFileSelect extends AbstractField<MultiFileSelect, Set<File>>
 
 	private String errorMessage = defaultErrorMessage;
 	private Div errorLabel = new Div();
-	private Label label = new Label();
-	private Label required = new Label("*");
+	private NativeLabel label = new NativeLabel();
+	private NativeLabel required = new NativeLabel("*");
 
 	/**
 	 * Constructor
 	 * 
-	 * @param rootFile
-	 *            The root directory where to browse
+	 * @param rootFile The root directory where to browse
 	 */
 	public MultiFileSelect(File rootFile) {
 		this(rootFile, null);
@@ -58,10 +57,8 @@ public class MultiFileSelect extends AbstractField<MultiFileSelect, Set<File>>
 	 * 
 	 * @since 1.1.0
 	 * 
-	 * @param rootFile
-	 *            The root directory where to browse
-	 * @param filter
-	 *            Set filter used for filename extension
+	 * @param rootFile The root directory where to browse
+	 * @param filter   Set filter used for filename extension
 	 */
 	public MultiFileSelect(File rootFile, String filter) {
 		super(null);
@@ -134,8 +131,7 @@ public class MultiFileSelect extends AbstractField<MultiFileSelect, Set<File>>
 	 * 
 	 * @since 1.1.0
 	 * 
-	 * @param filesText
-	 *            String for "files" text
+	 * @param filesText String for "files" text
 	 */
 	public void setFilesText(String filesText) {
 		this.filesText = filesText;

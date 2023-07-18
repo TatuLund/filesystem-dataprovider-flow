@@ -4,6 +4,7 @@ import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 
 interface FileSelectStyles {
 	String defaultErrorMessage = "Validation error";
@@ -17,7 +18,7 @@ interface FileSelectStyles {
 	static int MEGA = 1024*1024;
 	static int KILO = 1024;
 
-	default void setLabelStyles(Label label) {
+	default void setLabelStyles(NativeLabel label) {
 		label.getStyle().set("align-self", "flex-start");
 		label.getStyle().set("color","var(--lumo-secondary-text-color)");
 		label.getStyle().set("font-weight","500");
@@ -32,7 +33,7 @@ interface FileSelectStyles {
 		label.getStyle().set("box-sizing","border-box");
     }   
     
-	default void setRequiredStyles(Label required) {
+	default void setRequiredStyles(NativeLabel required) {
 		required.getStyle().set("color","var(--lumo-primary-color)");
 	}
 	
